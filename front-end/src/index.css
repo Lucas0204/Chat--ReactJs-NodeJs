@@ -23,7 +23,7 @@ body {
   height: 100vh;
 }
 
-.root {
+#root {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,7 +60,8 @@ body {
 
 #welcome-message {
   font-family: Arial, Helvetica, sans-serif;
-  margin-bottom: 3rem;
+  font-size: 1.8rem;
+  margin-bottom: .8rem;
 }
 
 .chat-container {
@@ -72,8 +73,6 @@ body {
   height: 78%;
 
   padding: 1.5rem;
-
-  border: 1px solid blue;
 }
 
 .messages-container {
@@ -81,7 +80,7 @@ body {
 
   padding: .6rem;
 
-  border: 1px solid green;
+  border: 1.5px solid rgba(151, 151, 151, 0.561);
 }
 
 .message {
@@ -89,10 +88,6 @@ body {
   font-size: large;
 
   padding: .8rem;
-  margin-bottom: .8rem;
-
-  border: 1px solid #a1a1a1;
-  border-radius: 10px;
 }
 
 .owner {
@@ -113,8 +108,9 @@ body {
   justify-content: space-around;
 
   padding: 1.2rem;
+  margin-top: .6rem;
 
-  border: 1px solid purple;
+  border: 1.2px solid rgba(151, 151, 151, 0.561);
 }
 
 .send-message input {
@@ -122,17 +118,26 @@ body {
   padding: .8rem;
 
   border-radius: 20px;
-  border: 2px solid rgba(128, 128, 128, 0.863);
+  border: 1.8px solid rgba(128, 128, 128, 0.863);
 
   outline: none;
+
+  transition: all .3s ease;
 }
 
 .send-message input:focus-within {
-  border: 2px solid purple;
+  border: 1.8px solid rgb(0, 0, 172);
 }
 
 .send-message button {
+  font-weight: bold;
+
   width: 15%;
+
+  background-color: rgb(0, 0, 172);
+  color: white;
+
+  border: none;
 }
 
 .start-pop-up {
