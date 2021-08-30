@@ -1,6 +1,6 @@
 const routes = require('express').Router()
+const GetMessagesController = require('./controllers/GetMessagesController')
 
-routes.get('/', (req, res) => res.send('ola mundo'))
-routes.get('/messages', () => {})
+routes.get('/messages', GetMessagesController.get)
 
 module.exports = routes

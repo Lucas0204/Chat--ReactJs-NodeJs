@@ -1,4 +1,5 @@
 const socketIo = require('socket.io')
+const Messages = require('./model/Messages')
 
 function socket(server) {
 
@@ -12,7 +13,9 @@ function socket(server) {
     io.on('connection', socket => {
         console.log(`Connected: ${socket.id}`)
 
-        socket.on('sendMessage', message => {
+        socket.on('sendMessage', async message => {
+            await Messages.save(message)
+
             socket.broadcast.emit('newMessage', message)
         })
     })

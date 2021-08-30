@@ -1,39 +1,39 @@
 import React, { useEffect, useState } from 'react'
 import { socket } from '../Chat'
-// import api from '../services/api'
 
 export default function Messages(props) {
-    socket.on('newMessage', message => {
-        setMessages([ ...messages, message ])
-    })
-
+    
     const [ messages, setMessages ] = useState([])
+
+    socket.on('newMessage', message => {
+        messages[0] ? 
+            setMessages([ ...messages, message ]) :
+            setMessages([ message ])
+    })
 
     useEffect(() => {
 
-        (async () => {
-            // const res = await api.get('/messages')
-            // const messageHistory = await res.json() 
+        setMessages(props.history)
 
-            const messageHistory = [
-                { user: 'Lucas', message: 'Ola mundo' },
-                { user: 'Diego', message: 'Salve salve' },
-                { user: 'Igor', message: 'Opa, blz' }
-            ]
-
-            setMessages(messageHistory)
-        })()
-
-    }, [])
+    }, [ props.history ])
 
     useEffect(() => {
 
         if (props.message.message) {
-            setMessages(messages => [ ...messages, props.message ])
+            messages[0] ? 
+                setMessages(messages => [ ...messages, props.message ]) : 
+                setMessages([ props.message ])
         }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ props.message ])
 
+    if (!messages[0]) {
+        return (
+            <div className="messages-container">
+            </div>
+        )
+    } 
 
     return (
         <div className="messages-container">
