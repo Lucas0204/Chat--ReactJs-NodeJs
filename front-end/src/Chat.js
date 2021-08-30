@@ -1,47 +1,42 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Messages from './components/Messages'
 import io from 'socket.io-client'
 
-export const socket = io('http://localhost:8080')
-
 export default function Chat() {
 
-    const [ message, setMessage ] = useState('')
-    const [ messageToSend, setMessageToSend ] = useState({})
+    const socket = io('http://localhost:8080')
+
+    const [ message, setMessage ] = useState({})
 
     function getMessage(event) {
         const message = event.target.value
-        setMessage(message)
+
+        
+        if (message) {
+            const messageTemplate = {
+                user: 'Lucas',
+                message
+            }
+
+            setMessage(messageTemplate)
+        }
     }
     
     function sendMessage() {
+    
+        if (message) {
+            socket.emit('sendMessage', message)
 
-        if (message.trim()) {
-            setMessageToSend({
-                user: 'Lucas',
-                message
-            })
-
-            setMessage('')
         }
     }
-
-    useEffect(() => {
-
-        if (messageToSend.message) {
-            socket.emit('sendMessage', messageToSend)
-        }
-
-    }, [ messageToSend ])
-
 
     return (
         <div className="chat-container">
 
-            <Messages message={messageToSend}></Messages>
+            <Messages></Messages>
 
             <div class="send-message">
-                <input onChange={getMessage} type="text" value={message} name="message" placeholder="Digite sua mensagem"/>
+                <input onChange={getMessage} type="text" name="message" placeholder="Digite sua mensagem"/>
                 <button onClick={sendMessage}>Enviar</button>
             </div>
 

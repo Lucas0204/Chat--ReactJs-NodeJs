@@ -13,7 +13,7 @@ function socket(server) {
         console.log(`Connected: ${socket.id}`)
 
         socket.on('sendMessage', message => {
-            socket.broadcast.emit('newMessage', message)
+            console.log(`Message received: ${message.user}: ${message.message}`)
         })
     })
 }

@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { socket } from '../Chat'
 // import api from '../services/api'
 
-export default function Messages(props) {
-    socket.on('newMessage', message => {
-        setMessages([ ...messages, message ])
-    })
+export default function Messages() {
 
-    const [ messages, setMessages ] = useState([])
+    const [ messages, setMessages ] = useState([{}])
 
     useEffect(() => {
 
@@ -26,23 +22,15 @@ export default function Messages(props) {
 
     }, [])
 
-    useEffect(() => {
-
-        if (props.message.message) {
-            setMessages(messages => [ ...messages, props.message ])
-        }
-
-    }, [ props.message ])
-
+    let divMessages = messages.map(message => {
+        return (
+            <div className="message"><span className="username">{message.user}</span>: {message.message}</div>
+        )
+    })
 
     return (
         <div className="messages-container">
-            {messages.map(message => (
-                <div className="message">
-                    <span className="username">{message.user}</span>
-                    : {message.message}
-                </div>
-            ))}
+            {divMessages}
         </div>
     )
 }
