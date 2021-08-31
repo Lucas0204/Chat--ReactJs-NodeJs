@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from 'react'
-import { socket } from '../Chat'
+import socket from '../services/socket'
 
 export default function Messages(props) {
     
-    const [ messages, setMessages ] = useState([])
+    const [ allMessagesSent, setAllMessagesSent ] = useState([])
 
     socket.on('newMessage', message => {
-        messages[0] ? 
-            setMessages([ ...messages, message ]) :
-            setMessages([ message ])
+        allMessagesSent[0] ? 
+            setAllMessagesSent([ ...allMessagesSent, message ]) :
+            setAllMessagesSent([ message ])
     })
 
     useEffect(() => {
 
-        setMessages(props.history)
+        setAllMessagesSent(props.messageHistory)
 
-    }, [ props.history ])
+    }, [ props.messageHistory ])
 
     useEffect(() => {
 
-        if (props.message.message) {
-            messages[0] ? 
-                setMessages(messages => [ ...messages, props.message ]) : 
-                setMessages([ props.message ])
+        if (props.messageSent.message) {
+            allMessagesSent[0] ? 
+                setAllMessagesSent([ ...allMessagesSent, props.messageSent ]) : 
+                setAllMessagesSent([ props.messageSent ])
         }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ props.message ])
+    }, [ props.messageSent ])
 
-    if (!messages[0]) {
+    if (!allMessagesSent[0]) {
         return (
             <div className="messages-container">
             </div>
@@ -37,7 +37,7 @@ export default function Messages(props) {
 
     return (
         <div className="messages-container">
-            {messages.map(message => (
+            {allMessagesSent.map(message => (
                 <div className="message">
                     <span className="username">{message.user}</span>
                     : {message.message}

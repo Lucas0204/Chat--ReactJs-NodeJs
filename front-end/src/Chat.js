@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Messages from './components/Messages'
-import io from 'socket.io-client'
 import api from './services/api'
-
-export const socket = io('http://localhost:8080')
+import socket from './services/socket'
 
 export default function Chat() {
 
     const [ message, setMessage ] = useState('')
-    const [ messageToSend, setMessageToSend ] = useState({})
+    const [ messageToBeSent, setMessageToBeSent ] = useState({})
     const [ messageHistory, setMessageHistory ] = useState([])
 
     function getMessage(event) {
@@ -19,7 +17,7 @@ export default function Chat() {
     function sendMessage() {
 
         if (message.trim()) {
-            setMessageToSend({
+            setMessageToBeSent({
                 user: 'Lucas',
                 message
             })
@@ -30,32 +28,29 @@ export default function Chat() {
     
     useEffect(() => {
         (async () => {
-            
+
             const res = await api.get('/messages')
             const messages = await res.data
-            
-            console.log(messages)
             
             if (messages) {
                 setMessageHistory(messages)
             }
-            
+
         })()
     }, [])
     
     useEffect(() => {
 
-        if (messageToSend.message) {
-            socket.emit('sendMessage', messageToSend)
+        if (messageToBeSent.message) {
+            socket.emit('sendMessage', messageToBeSent)
         }
-
-    }, [ messageToSend ])
+    }, [ messageToBeSent ])
     
 
     return (
         <div className="chat-container">
 
-            <Messages message={messageToSend} history={messageHistory}></Messages>
+            <Messages messageSent={messageToBeSent} messageHistory={messageHistory}></Messages>
 
             <div class="send-message">
                 <input onChange={getMessage} type="text" value={message} name="message" placeholder="Digite sua mensagem"/>
