@@ -1,6 +1,6 @@
 const routes = require('express').Router()
-const GetMessagesController = require('./controllers/GetMessagesController')
+const GetMessageHisotryController = require('./controllers/GetMessageHistoryController')
 
-routes.get('/messages', GetMessagesController.get)
+routes.get('/messages', GetMessageHisotryController.get)
 
 module.exports = routes

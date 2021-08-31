@@ -1,20 +1,19 @@
 const redis = require('../database')
 
 class Messages {
-    async get() {
-        const messages = JSON.parse(await redis.get('messages'))
-
-        if (messages) {
-            return messages
-        }
-    }
-
-    async save(message) {
+    async getMessageHistory() {
         const messageHistory = JSON.parse(await redis.get('messages'))
 
         if (messageHistory) {
-            const res = await redis.set('messages', JSON.stringify([ ...messageHistory, message ]))
-            console.log(res)
+            return messageHistory
+        }
+    }
+
+    async saveMessage(message) {
+        const messageHistory = JSON.parse(await redis.get('messages'))
+
+        if (messageHistory) {
+            await redis.set('messages', JSON.stringify([ ...messageHistory, message ]))
         } else {
             await redis.set('messages', JSON.stringify([ message ]))
         }

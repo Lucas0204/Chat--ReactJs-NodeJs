@@ -81,6 +81,9 @@ body {
   padding: .6rem;
 
   border: 1.5px solid rgba(151, 151, 151, 0.561);
+
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .message {

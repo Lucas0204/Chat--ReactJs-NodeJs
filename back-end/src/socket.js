@@ -1,11 +1,12 @@
+require('dotenv').config()
 const socketIo = require('socket.io')
 const Messages = require('./model/Messages')
 
-function socket(server) {
+function socketConnection(server) {
 
     const io = socketIo(server, {
         cors: {
-            origin: 'http://localhost:3000',
+            origin: process.env.CHAT_HOST,
             methods: ['*']
         }
     })
@@ -14,11 +15,11 @@ function socket(server) {
         console.log(`Connected: ${socket.id}`)
 
         socket.on('sendMessage', async message => {
-            await Messages.save(message)
+            await Messages.saveMessage(message)
 
             socket.broadcast.emit('newMessage', message)
         })
     })
 }
 
-module.exports = socket
+module.exports = socketConnection
