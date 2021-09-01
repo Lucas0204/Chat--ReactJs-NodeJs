@@ -1,19 +1,21 @@
 import React, { useState } from 'react'
 
-export default function StartPopUp() {
+export default function StartPopUp(props) {
 
-    const [ name, setName ] = useState('')
+    const [ username, setUsername ] = useState('')
 
     function getUsername(event) {
         const username = event.target.value
 
-        setName(username)
+        setUsername(username)
     }
 
     function registerUsername(event) {
-        if (name.trim()) {
+        if (username.trim()) {
             const popUp = event.target.parentElement.parentElement
             popUp.style.display = 'none'
+
+            props.onRegisterUsername(username)
         }
     }
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Messages from './components/Messages'
+import StartPopUp from './components/StartPopUp'
 import api from './services/api'
 import socket from './services/socket'
 
@@ -9,6 +10,8 @@ export default function Chat() {
     const [ messageToBeSent, setMessageToBeSent ] = useState({})
     const [ messageHistory, setMessageHistory ] = useState([])
 
+    const  [ username, setUsername ] = useState('')
+
     function getMessage(event) {
         const message = event.target.value
         setMessage(message)
@@ -16,14 +19,18 @@ export default function Chat() {
     
     function sendMessage() {
 
-        if (message.trim()) {
+        if (message.trim() && username !== '') {
             setMessageToBeSent({
-                user: 'Lucas',
+                user: username,
                 message
             })
 
             setMessage('')
         }
+    }
+
+    function registerUsername(username) {
+        setUsername(username)
     }
     
     useEffect(() => {
@@ -49,6 +56,8 @@ export default function Chat() {
 
     return (
         <div className="chat-container">
+
+            <StartPopUp onRegisterUsername={(username) => { registerUsername(username) }}></StartPopUp>
 
             <Messages messageSent={messageToBeSent} messageHistory={messageHistory}></Messages>
 
