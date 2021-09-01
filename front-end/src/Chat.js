@@ -35,14 +35,12 @@ export default function Chat() {
     
     useEffect(() => {
         (async () => {
-
             const res = await api.get('/messages')
-            const messages = await res.data
+            const messageHistory = await res.data
             
-            if (messages) {
-                setMessageHistory(messages)
+            if (messageHistory) {
+                setMessageHistory(messageHistory)
             }
-
         })()
     }, [])
     

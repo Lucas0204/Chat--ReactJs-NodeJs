@@ -24,7 +24,6 @@ export default function Messages(props) {
                 setAllMessagesSent([ ...allMessagesSent, props.messageSent ]) : 
                 setAllMessagesSent([ props.messageSent ])
         }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ props.messageSent ])
 
